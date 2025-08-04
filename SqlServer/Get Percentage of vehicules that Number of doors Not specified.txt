@@ -1,0 +1,8 @@
+select 
+(
+
+CAST ((select count(*) as total from VehicleDetails 
+ where VehicleDetails.NumDoors is null) as float   )
+ /
+Cast( (select count(*)from VehicleDetails  as total) as float  )
+)R1

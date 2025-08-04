@@ -1,0 +1,6 @@
+select  distinct Makes.Make,DriveTypes.DriveTypeName, count(*) Total
+ from DriveTypes inner join VehicleDetails on VehicleDetails.DriveTypeID= DriveTypes.DriveTypeID
+ inner join Makes on Makes.MakeID= VehicleDetails.MakeID
+
+ group by Make,DriveTypes.DriveTypeName 
+  having  count(*) >10000

@@ -1,0 +1,3 @@
+select Make,Year, (Year(GETDATE()) -VehicleDetails.Year) as AgeOfYear from VehicleDetails
+inner join Makes on Makes.MakeID= VehicleDetails.MakeID
+ order by AgeOfYear asc

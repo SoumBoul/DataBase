@@ -1,0 +1,2 @@
+select distinct VehicleDetails.Vehicle_Display_Name, VehicleDetails.Engine_CC from VehicleDetails
+where Engine_CC=(select Min(Engine_CC)from VehicleDetails)

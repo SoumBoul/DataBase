@@ -1,0 +1,2 @@
+select Max(VehicleDetails.Engine_CC) as MaxiCC, Min(VehicleDetails.Engine_CC)as MiniCC , AVG(VehicleDetails.Engine_CC) As AverageCC
+from VehicleDetails
