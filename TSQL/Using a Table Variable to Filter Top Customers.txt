@@ -1,0 +1,18 @@
+--Declare a table variable @TopCustomers with customer_id and total_spent, insert only customers whose total spending exceeds 3000, then select all rows from the variable.
+
+declare @TopCustomers table
+(
+Customer_id int ,
+total_spent decimal(10,2)
+)
+
+insert into @TopCustomers(Customer_id, total_spent)
+select
+Customer_id,
+sum(total_amount) as totalspent
+
+from orders
+group by Customer_id
+having (sum(total_amount)>3000)
+
+select *from @TopCustomers

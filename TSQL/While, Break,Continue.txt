@@ -1,0 +1,24 @@
+-- Write a T-SQL script that prints numbers from 1 to 20, skips multiples of 3 using `CONTINUE`, and stops the loop when the number reaches 17 using `BREAK`.
+
+DECLARE @Number INT = 1;
+
+WHILE @Number <= 20
+BEGIN
+-- Vérifie si on doit ignorer ce nombre
+IF @Number % 3 = 0
+BEGIN
+SET @Number = @Number + 1;
+CONTINUE;
+END
+
+```
+-- Vérifie si on doit arrêter avant d’afficher 17
+IF @Number = 17
+    BREAK;
+
+-- Affiche le nombre
+PRINT CAST(@Number AS VARCHAR(10));
+
+-- Incrémente pour passer au suivant
+SET @Number = @Number + 1;
+END

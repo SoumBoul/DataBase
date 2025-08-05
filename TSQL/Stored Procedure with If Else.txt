@@ -1,0 +1,21 @@
+--Create a stored procedure AjouterEmploye that takes employee info, checks if salary > 4000, inserts into Employes if true, else returns an error message.
+CREATE PROCEDURE AjouterEmploye
+(
+@Id INT,
+@Nom NVARCHAR(100),
+@Salaire DECIMAL(10,2),
+@DateEmbauche DATE,
+@DepartementID INT
+)
+AS
+BEGIN
+IF @Salaire > 4000
+BEGIN
+INSERT INTO Employes(Id, Nom, Salaire, DateEmbauche, DepartementId)
+VALUES (@Id, @Nom, @Salaire, @DateEmbauche, @DepartementID)
+END
+ELSE
+BEGIN
+PRINT 'Salaire insuffisant pour un ajout.'
+END
+END

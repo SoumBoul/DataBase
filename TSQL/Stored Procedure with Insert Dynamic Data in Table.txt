@@ -1,0 +1,31 @@
+
+Create PROCEDURE InsertEmployesAuto
+AS
+BEGIN
+DECLARE @NomDynamique NVARCHAR(50)
+DECLARE @Salaire DECIMAL(10,2) = 3000
+
+DECLARE @counter INT = 1
+DECLARE @BonusSalaire INT = 300
+DECLARE @DateEmbauche DATE
+DECLARE @DepartementId INT = 1
+
+```
+WHILE @counter <= 10
+BEGIN
+    SET @NomDynamique = 'Employe' + CAST(@counter AS NVARCHAR)
+    SET @Salaire = @Salaire + @BonusSalaire
+    SET @DateEmbauche = GETDATE()
+
+    INSERT INTO Employes1(Id, Nom, Salaire, DateEmbauche, DepartementId)
+    VALUES(@counter, @NomDynamique, @Salaire, @DateEmbauche, @DepartementId)
+
+    SET @counter = @counter + 1
+END
+
+```
+
+END
+
+exec InsertEmployesAuto
+select *from Employes1

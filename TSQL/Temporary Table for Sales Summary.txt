@@ -1,0 +1,25 @@
+-- Create a temporary table `#TempSalesSummary` to store `customer_id`, total number of orders, and total amount spent, then populate it from the `Orders` table and display the results.
+
+if OBJECT_ID('tempdb..#TempSalesSummary ')is not NULL
+drop table #TempSalesSummary
+
+create table #TempSalesSummary
+(
+customer_id int ,
+TotalOrders int,
+TotalAmountSpent decimal (10,2)
+)
+
+begin
+
+insert into #TempSalesSummary( customer_id ,TotalOrders,TotalAmountSpent)
+
+select
+customer_id ,
+Count(*) as TotalOrders,
+Sum(total_amount) as TotalAmountSpent from Orders
+
+group by customer_id
+end
+
+select *from #TempSalesSummary

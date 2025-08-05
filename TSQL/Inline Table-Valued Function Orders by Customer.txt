@@ -1,0 +1,15 @@
+--Create an inline table-valued function `fn_GetOrdersByCustomer` that takes `@CustomerID INT` and returns the customer's orders (`order_id`, `order_date`, `total_amount`) sorted by `order_date` in descending order.
+
+create function fn_GetOrdersByCustomer
+(@Customer_id int )
+
+returns Table
+as
+
+return
+select order_id,order_date,total_amount from Orders
+where customer_id= @Customer_id
+
+output
+select *from fn_GetOrdersByCustomer(101)
+order by order_date descrom @FilteredCustomers

@@ -1,0 +1,34 @@
+--Implement stored procedures to: (1) Add a department and return 1 if successful, 0 otherwise; (2) Display all departments sorted by name; (3) Update a department’s manager and return the affected row count; (4) Delete a department by ID with a message if not found; (5) View the source of `AjouterDepartement` using `sp_helptext`; (6) Drop `SupprimerDepartement` using `DROP PROCEDURE`.
+
+create procedure AjouterDepartement
+(
+@DapartementID int,
+@NomDepartement nvarchar(50),
+@Responsable nvarchar(50)
+)
+
+as
+begin
+
+insert into DepartementsRH(DepartmentID,NomDepartement,Responsable)
+values(@DapartementID,@NomDepartement,@Responsable);
+
+end
+
+CREATE PROCEDURE AfficherDepartements
+AS
+BEGIN
+SELECT DepartmentID, NomDepartement, Responsable
+FROM DepartementsRH
+ORDER BY NomDepartement;
+END
+
+create procedure MettreAJourResponsable
+(
+@DepartementID int,
+@NewReposable nvarchar(50)
+)
+as
+begin
+update DepartementsRH set Responsable=@NewReposable where DepartmentID=@DepartementID
+end

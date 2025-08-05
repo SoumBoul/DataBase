@@ -1,0 +1,22 @@
+create function GetCategorieSalaire  (@Salaire decimal(10,2))
+
+returns nvarchar(10)
+as
+begin
+declare @Text nvarchar(10)
+
+```
+set  @Text= case
+when  @Salaire<3000  then  'Bas'
+when @Salaire  between 3000 and 5000 then 'Moyen'
+else  'Elevé'
+end
+ return  @Text
+
+```
+
+end
+
+for Use it :
+
+select Nom, Salaire, dbo.GetCategorieSalaire(Salaire) as category  from  Employes1

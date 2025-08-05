@@ -1,0 +1,16 @@
+-- **Tracking Salary Changes**
+--Display for each employee sorted by hire date
+--Id,Name, Salary, HireDate` 
+--The Previous salary using LAG()
+--The next salary using LEAD()
+--The difference from the previous salary
+
+SELECT
+Id,
+Nom,
+Salaire,
+DateEmbauche,
+LAG(Salaire, 1) OVER (ORDER BY DateEmbauche) AS SalaireAvant,
+LEAD(Salaire, 1) OVER (ORDER BY DateEmbauche) AS SalaireApres,
+Salaire - LAG(Salaire, 1) OVER (ORDER BY DateEmbauche) AS EcartAvecAvant
+FROM Employes;

@@ -1,0 +1,12 @@
+--Display page 4 of the employee list with 5 employees per page, sorted by salary in descending order.
+
+declare @RowPerPage int
+declare @PageEmployes int
+
+set @RowPerPage=5
+set @PageEmployes=4
+
+select Name,Department,Salary  from Employees2
+order by Salary
+offset (@PageEmployes- 1)*@RowPerPage Rows
+fetch next @RowPerPage Rows only

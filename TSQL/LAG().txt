@@ -1,0 +1,13 @@
+--For each employee, display Id, Name, Salary, previous Salary using `LAG()`, and the difference between them, ordered by hire date to ensure meaningful comparison.
+
+declare @Difference decimal(10,2)
+
+select
+Id,
+Nom,
+DateEmbauche,
+Salaire,
+LAG(Salaire,1)over(order by DateEmbauche)  as SalaireAvant_LAG,
+Salaire - LAG(Salaire,1) OVER (ORDER BY DateEmbauche) AS EcartAvecAvant
+
+from Employes

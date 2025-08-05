@@ -1,0 +1,11 @@
+
+--Display each employee's Id, Name, Salary, and SalaryRank using two different ranking methods that account for ties (e.g., `RANK()` and `DENSE_RANK()`).
+
+select
+Id,
+Nom,
+Salaire,
+Departement,
+Rank() over (order  by Salaire) as ClassementsalaireWith_Rank,
+Dense_Rank() over (order  by Salaire) as ClassementsalaireWith_Dense_Rank
+from Employes

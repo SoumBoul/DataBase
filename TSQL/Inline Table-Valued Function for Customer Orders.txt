@@ -1,0 +1,21 @@
+--Create an inline table-valued function `fn_GetCustomerOrders` that takes `@CustomerId INT` as input and returns a table with `order_id`, `order_date`, and `total_amount` filtered for that customer only.
+
+create function fn_GetCustomerOrders
+(
+@Customer_id int
+)
+
+returns Table
+
+as
+return
+(
+select
+order_id,
+
+order_date,
+
+total_amount from Orders  where Customer_id= @Customer_id
+)
+
+select *from fn_GetCustomerOrders(101)

@@ -1,0 +1,46 @@
+--Create a temp table `#CustomerSpending` with each customer’s total orders, total spent, and average order amount; then filter into a table variable `@FilteredCustomers` for those with more than 2 orders and an average above 1200, and display the results.
+
+IF  OBJECT_ID('tempdb..#CustomerSpending')IS NOT NULL
+DROP TABLE #CustomerSpending;
+
+create table #CustomerSpending
+(
+customer_id int,
+
+total_number int,
+
+total_amount decimal(10,2),
+
+average decimal(10,2)
+
+)
+
+declare @FilteredCustomers  table
+(
+Customer_id int,
+Average_Order decimal(10,2)
+)
+
+insert into #CustomerSpending (customer_id,total_number,total_amount,average )
+
+select
+customer_id,
+
+count(*)as TotalOrders,
+
+sum(total_amount) as Totla_spent,
+
+avg(total_amount)as Average_Amount
+from Orders
+
+group by Customer_id
+
+insert into  @FilteredCustomers( Customer_id,Average_Order )
+select
+Customer_id,
+Average
+
+from #CustomerSpending
+where total_number>2 and total_amount>2000
+
+select *f

@@ -1,0 +1,10 @@
+--Display only the employees whose name appears more than once in the Employes table.
+
+
+WITH EmployesDoublons AS (
+  SELECT *, COUNT(*) OVER (PARTITION BY Nom) AS Occurrences
+  FROM Employes
+)
+SELECT Id, Nom, Salaire, Departement
+FROM EmployesDoublons
+WHERE Occurrences > 1;

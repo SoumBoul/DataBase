@@ -1,0 +1,13 @@
+--Display departments with at least 3 employees, showing the department name and total employee count.
+
+select * from
+(
+select
+Id,
+Nom,
+Row_Number()over(Partition by Departement order by Nom)as Classement
+from Employes
+
+)as Range
+
+where Classement >=3

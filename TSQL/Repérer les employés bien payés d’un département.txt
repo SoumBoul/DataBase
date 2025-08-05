@@ -1,0 +1,44 @@
+create database  HR_DB1
+
+GO
+use HR_DB1
+create table Departements1 (departmentID int primary key , DepartementName varchar(50) not null)
+insert into Departements1(DepartmentID,DepartementName)
+values (1,'Essone');
+insert into Departements1(DepartmentID,DepartementName)
+values (2,'Paris');
+insert into Departements1(DepartmentID,DepartementName)
+values (3,'Dijon');
+
+create table MyEmployees1( EmployeID int Primary key, HireDate date, Salary decimal(10,2),
+DepatementID int foreign key  references  Departements1(departmentID))
+
+DECLARE @EmployeID int;
+DECLARE @HireDate date;
+declare @Salary decimal(10,2);
+declare @DepartementID int
+
+insert into MyEmployees1(EmployeID , HireDate , Salary,DepatementID)
+values (1,'2023/02/12',2800,1);
+
+insert into MyEmployees1(EmployeID , HireDate , Salary,DepatementID)
+values (2,'2020/09/10',3000,2);
+
+insert into MyEmployees1(EmployeID , HireDate , Salary,DepatementID)
+values (3,'2021/07/09',1700,3);
+
+DECLARE @DeparID int;
+DECLARE @DeparName varchar(50);
+Declare @ID int;
+Declare @AvgSalaryGlobal decimal (10,2);
+Declare  @AvgSalaryAboveAvg  decimal(10,2);
+set  @ID= 2;
+
+select @DeparName = Departements1.DepartementName  from Departements1  where departmentID= @ID ;
+print 'departement Name  est :' + CAST( @DeparName as varchar);
+
+select @AvgSalaryGlobal= AVG(Salary)from MyEmployees1;
+print 'Average Salary  is :' + CAST(  @AvgSalaryGlobal as varchar);
+
+select @AvgSalaryAboveAvg = AVG(Salary) from MyEmployees1 where Salary>@AvgSalaryGlobal;
+print 'Average Salary superieur a la moyenne is :' + CAST(  @AvgSalaryAboveAvg as varchar);

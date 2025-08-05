@@ -1,0 +1,2 @@
+select id,Nom,Salaire,Rank()over (order by Salaire desc) as ClassementSalaire
+from Employes

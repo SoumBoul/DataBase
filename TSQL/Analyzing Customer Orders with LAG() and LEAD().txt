@@ -1,0 +1,12 @@
+--Use window functions to display each customer's name, order date, amount, previous order amount (`LAG()`), next order amount (`LEAD()`), and the difference with the previous order — for customers with multiple orders.
+
+select
+c.full_name,
+o.order_date,
+o.total_amount,
+Lag(o.total_amount,1) over (partition by full_name  ORDER BY o.order_date  ) as Commande_precedente,
+Lead(o.total_amount,1)over (partition by full_name ORDER BY o.order_date) as  Commande_suivante,
+
+o.total_amount - Lag(o.total_amount,1) over (partition by full_name  ORDER BY o.order_date)
+as diff
+from  Customers c  inner join orders o on o.customer_id= c.customer_id

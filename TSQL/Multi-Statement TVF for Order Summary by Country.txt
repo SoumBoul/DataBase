@@ -1,0 +1,35 @@
+-- Create a multi-statement table-valued function `fn_GetOrderSummaryByCountry` that takes `@Country NVARCHAR(50)` and returns `full_name`, `total_orders`, and `total_spent` for all customers from that country.
+
+create function fn_GetOrderSummaryByCountry
+(
+@Country NVARCHAR(50)
+)
+
+returns @Result Table
+(
+full_name nvarchar(50),
+
+total_orders int,
+
+total_spent decimal (10,2)
+
+)
+
+as
+begin
+insert into @Result(full_name,total_orders,total_spent)
+select
+
+c.full_name,
+
+count(*)total_orders,
+
+sum(o.total_amount) as total_spent  from Orders o  join Customers c
+
+on c.customer_id= o.customer_id  WHERE c.country = @Country
+
+group by c.full_name, c.country;
+
+return;
+
+end;

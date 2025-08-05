@@ -1,0 +1,9 @@
+--Display only the employees whose name appears more than once in the Employes table.
+SELECT Id, Nom, Salaire, Departement
+FROM Employes
+WHERE Nom IN (
+    SELECT Nom
+    FROM Employes
+    GROUP BY Nom
+    HAVING COUNT(*) > 1
+);

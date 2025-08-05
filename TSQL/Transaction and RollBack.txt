@@ -1,0 +1,37 @@
+create procedure MettreAJourSalaire
+(
+@ID int,
+@Salaire decimal(10,2)
+
+)
+as
+begin
+
+begin try
+declare @SalaireAncien decimal(10,2)
+
+select @SalaireAncien =   Salaire from Employes1 where Id=@ID
+
+begin Transaction
+
+if @Salaire >@SalaireAncien
+begin
+Update Employes1 set Salaire= @Salaire  where Id=@ID
+
+commit
+
+print'Mise à jour réussie' + Cast(@SalaireAncien as varchar)
+end
+else
+begin
+RollBack
+print'Salaire non mis à jour (valeur inférieure)' + error_Message();
+end
+end try
+
+BEGIN CATCH
+ROLLBACK;
+PRINT 'Erreur système : ' + ERROR_MESSAGE();
+END CATCH
+
+exec  MettreAJourSalaire @ID= 3, @Salaire=5000

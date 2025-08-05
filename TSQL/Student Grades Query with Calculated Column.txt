@@ -1,0 +1,18 @@
+--Create a SQL query that selects `student_id`, `score`, and a calculated `grade` column based on score thresholds.
+
+declare @Grades nvarchar(10)
+
+select Score, student_id,
+
+case
+when Score between 90  and 100 then  'A'
+
+when Score between 80  and 90 then   'B'
+when Score between 70  and 79 then   'C'
+when Score between 60  and 69 then   'D'
+
+else
+'F'
+end
+as Grade
+from Grades

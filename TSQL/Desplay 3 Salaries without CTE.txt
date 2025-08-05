@@ -1,0 +1,14 @@
+--Display the top 3 highest-paid employees per department using a subquery or window function without CTEs, showing Id, Name, Salary, Department, and Rank from 1 to 3.
+
+SELECT * FROM
+(
+SELECT
+Id,
+Nom,
+Salaire,
+Departement,
+ROW_NUMBER() OVER (PARTITION BY Departement ORDER BY Salaire DESC) AS Range
+FROM Employes
+) AS Classement
+WHERE Range <= 3
+ORDER BY Departement, Salaire DESC

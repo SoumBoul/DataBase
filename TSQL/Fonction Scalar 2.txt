@@ -1,0 +1,20 @@
+--Create a scalar function that returns a salary category: return `'Low'` if salary < 3000, `'Medium'` if salary is between 3000 and 5000, and `'High'` if salary > 5000.
+
+CREATE FUNCTION GetSalaryCategory
+(
+@Salary  DECIMAL(10,2)
+)
+RETURNS NVARCHAR(10)
+AS
+BEGIN
+DECLARE @Category NVARCHAR(10);
+
+SET @Category =
+CASE
+WHEN @Salary < 3000 THEN 'Low'
+WHEN @Salary BETWEEN 3000 AND 5000 THEN 'Medium'
+ELSE 'High'
+END;
+
+RETURN @Category;
+END;

@@ -1,0 +1,18 @@
+--Using a Table Variable to Filter Top Customers
+
+declare @TopCustomers table
+(
+Customer_id int ,
+total_spent decimal(10,2)
+)
+
+insert into @TopCustomers(Customer_id, total_spent)
+select
+Customer_id,
+sum(total_amount) as totalspent
+
+from orders
+group by Customer_id
+having (sum(total_amount)>3000)
+
+select *from @TopCustomers

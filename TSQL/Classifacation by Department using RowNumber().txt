@@ -1,0 +1,6 @@
+select Nom, Salaire, dbo.GetCategorieSalaire(Salaire) as category  from  Employes1
+
+select id,Nom,Salaire, Departments.DepartmentID,Row_Number()over (partition by DepartmentID order by Salaire desc)
+as ClassementDepartement
+from Employes inner join Departments
+on Employes.Departement= Departments.DepartmentID
