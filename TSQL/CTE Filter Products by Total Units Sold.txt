@@ -1,0 +1,14 @@
+--Use a Common Table Expression (CTE) to calculate the total quantity sold per product and display only those with more than 100 units sold, showing `product_id` and `total_quantity_sold`.
+
+with Total_Quantity_Sold
+as
+(
+select
+
+product_id,
+sum(quantity_sold ) as total
+from Sales  group by product_id having sum(quantity_sold ) >100
+
+)
+
+select *from  Total_Quantity_Sold

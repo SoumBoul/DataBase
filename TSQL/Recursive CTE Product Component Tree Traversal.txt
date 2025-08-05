@@ -1,0 +1,25 @@
+--Write a recursive CTE on the `Parts(part_id, part_name, parent_part_id)` table to retrieve all components and sub-components required to build a product, starting from a top-level part and traversing the full hierarchy.
+
+with Top_Level
+as
+(
+select
+part_id,
+part_name,
+parent_part_id,
+1 as level
+from Parts   where part_id=1
+
+union all
+select
+p.part_id,
+p.part_name,
+p.parent_part_id,
+t.level +1
+from Parts p
+inner join
+Top_Level t on p.parent_part_id= t.part_id
+
+)
+
+select * from Top_Level

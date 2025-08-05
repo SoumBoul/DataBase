@@ -1,0 +1,13 @@
+--Create an `AFTER UPDATE` trigger `tr_TrackCourseChange` on the `Enrollments` table that logs changes to the `course` field in `Course_Change_Log` with `student_id`, `old_course`, `new_course`, and `change_date`.
+
+create trigger tr_TrackCourseChange on Enrollments
+after Update
+as
+begin
+
+insert into Course_Change_Log(student_id,old_course,new_course,change_date)
+select i.student_id,d.course,i.course, GetDate()
+
+from inserted i inner join deleted d  on i.student_id= d.student_id
+
+end

@@ -1,0 +1,33 @@
+--Write a recursive CTE on the `Departments` table to compute the total budget for a department, including the budgets of all its direct and indirect sub-departments.
+
+--Use a recursive CTE on the `Departments` table to calculate the total budget by traversing the department hierarchy from a parent department through all its sub-departments.
+
+WITH Total_cumulative_budget AS (
+-- Anchor member: top-level department
+SELECT
+department_id,
+name,
+parent_department_id,
+budget,
+1 AS level,
+CAST(budget AS DECIMAL(10,2)) AS cumulative_budget
+FROM Departments_d
+WHERE department_id = 1  
+UNION ALL
+
+-- Recursive member: sub-departments
+SELECT
+    d.department_id,
+    d.name,
+    d.parent_department_id,
+    d.budget,
+    t.level + 1,
+    CAST(t.cumulative_budget + d.budget AS DECIMAL(10,2)) AS cumulative_budget
+FROM Departments_d d
+INNER JOIN Total_cumulative_budget t
+    ON d.parent_department_id = t.department_id
+
+
+
+)
+

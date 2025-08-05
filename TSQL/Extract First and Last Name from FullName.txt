@@ -1,0 +1,3 @@
+select FullName,left(FullName,charindex(' ' ,FullName+' ')) as  FirstName,
+Right(FullName,charindex(' ' ,reverse(FullName)+' ')) as  LastName
+from Employees3

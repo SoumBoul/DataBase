@@ -1,0 +1,15 @@
+--Create an inline table-valued function `fn_GetOrdersByCustomer` that accepts `@CustomerId INT` and returns all orders for that customer, including `order_id`, `order_date`, and `total_amount`.
+
+create function fn_GetOrdersByCustomer
+(
+@CustomerId INT
+)
+returns table
+
+as
+return
+select
+o.order_id,
+o.order_date,
+o.total_amount from Orders o inner join customers c
+on o.customer_id= c.customer_id where c.customer_id= @CustomerId

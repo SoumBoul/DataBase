@@ -1,0 +1,24 @@
+--Create a multi-statement table-valued function `fn_GetTopCustomersByAmount` that takes `@MinAmount DECIMAL(10,2)` as input and returns all customers whose total spending exceeds that amount, including `customer_id` and `total_spent`.
+
+create function fn_GetTopCustomersByAmount
+(
+@MinAmount DECIMAL(10,2)
+)
+
+returns @Result Table
+(
+customer_id int,
+
+total_spent decimal(10,2)
+)
+as
+begin
+insert into @Result(customer_id,total_spent)
+select
+o.customer_id,
+sum(o.total_amount) as Total_spent from  orders o
+group by customer_id
+having sum(o.total_amount)> @MinAmount
+return;
+
+end

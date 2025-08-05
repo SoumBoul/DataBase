@@ -1,0 +1,15 @@
+--Create a recursive CTE on the `Employees(employee_id, manager_id, name)` table to display the full reporting hierarchy starting from a given manager.
+
+with hierarchy as
+(
+
+select employee_id,manager_id,name, 1 as level
+from Employees where employee_id=2
+union all
+select
+e.employee_id,e.manager_id,[e.name](http://e.name/), h.level +1
+from Employees e join  hierarchy h
+on e.manager_id= h.employee_id
+)
+
+select *from hierarchy

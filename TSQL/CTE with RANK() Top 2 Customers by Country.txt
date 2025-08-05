@@ -1,0 +1,16 @@
+--Use a CTE with `RANK()` and `PARTITION BY country` to rank customers by total orders, and display the top 2 customers per country.
+
+WITH Classify_Customers_Per_Country AS (
+SELECT
+c.customer_id,
+c.full_name,
+c.country,
+SUM(o.total_amount) AS Total_orders,
+RANK() OVER (PARTITION BY c.country ORDER BY SUM(o.total_amount) DESC) AS Range
+FROM Customers c
+INNER JOIN Orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.full_name, c.country
+)
+SELECT  *
+FROM  Classify_Customers_Per_Country
+WHERE Range <=2;

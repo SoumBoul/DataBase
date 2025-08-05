@@ -1,0 +1,4 @@
+--Remove leading and trailing spaces from the `@Name` string using the `LTRIM(RTRIM(@Name))` function.
+
+select FullName,
+LTRIM(RTRIM(FullName)) as Name_Without_space from Employees3

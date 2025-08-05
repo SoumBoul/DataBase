@@ -1,0 +1,34 @@
+--Write a query that lists all products with their total units sold and a performance level (`High`, `Medium`, `Low`, or `No Sales`) based on total quantity sold, using a `LEFT JOIN` and `CASE`.
+
+use C21_DB1;
+
+with Total_Sold
+as
+(
+select
+p.product_id,
+[p.name](http://p.name/),
+p.price,
+p.stock_quantity,
+ISNULL(sum(p.stock_quantity),0 )as Quantity from Products p left join Sales s
+on p.product_id= s.product_id  group by p.product_id,
+[p.name](http://p.name/),p.price,p.stock_quantity
+
+)
+select
+product_id,
+name,
+price,
+stock_quantity,
+case
+when Quantity >100 then  'High'
+
+when  Quantity between 51 and 100 then 'Medium'
+
+when Quantity  between 1 and 50 then 'Low'
+
+else
+'No Sales'
+end  as Performance_Level_Quantity
+
+from  Total_Sold ;

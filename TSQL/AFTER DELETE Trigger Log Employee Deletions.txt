@@ -1,0 +1,15 @@
+-- Create an `AFTER DELETE` trigger `tr_LogEmployeeDeletion` on the `Employes` table that inserts into `Audit_Log` with `action_type = 'DELETE'`, `employee_id` and `old_salary` from `DELETED`, and `new_salary` as `NULL`.
+
+CREATE TRIGGER tr_LogEmployeeDeletion
+ON Employes
+AFTER DELETE
+AS
+BEGIN
+INSERT INTO Audit_Log(action_type, employee_id, old_salary, new_salary)
+SELECT
+'DELETE',       -- Action
+[d.Id](http://d.id/),           -- Identifiant de l'employé supprimé
+d.Salaire,      -- Dernier salaire connu
+NULL            -- Pas de nouveau salaire : il a été supprimé
+FROM deleted d;
+END;

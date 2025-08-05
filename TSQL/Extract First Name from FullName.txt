@@ -1,0 +1,4 @@
+--Extract the first name from the `FullName` column in the `Employees3` table by selecting the substring before the first space using:
+
+select FullName,left(FullName,charindex(' ' ,FullName+' ')) as  FirstName
+from Employees3
