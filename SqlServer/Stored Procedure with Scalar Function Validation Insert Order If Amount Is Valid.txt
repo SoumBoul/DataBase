@@ -1,0 +1,41 @@
+--Create a stored procedure `sp_InsertOrderWithValidation` that takes `@CustomerId` and `@Amount`, calls the scalar function `fn_IsValidAmount(@Amount)`, inserts into `Orders` if the amount is valid (> 0), otherwise prints `'Invalid amount. Must be greater than 0.'` without inserting.
+
+CREATE FUNCTION fn_IsValidAmount
+(
+@Amount DECIMAL(10,2)
+)
+RETURNS INT
+AS
+BEGIN
+IF @Amount > 0
+BEGIN
+RETURN 1
+END
+ELSE
+BEGIN
+RETURN 0
+END
+END
+
+create procedure sp_InsertOrderWithValidation
+(
+@CustomerId INT,
+
+@Amount DECIMAL(10,2),
+@Order_ID int
+)
+as
+begin
+if (select dbo.fn_IsValidAmount (@Amount))=1
+begin
+
+insert into Orders(order_id,customer_id,order_Date,total_amount)
+values(@Order_Id,@CustomerId,GETDATE(),@Amount)
+end
+
+else
+
+print 'Invalid amount. Must be greater than 0'
+
+end
+

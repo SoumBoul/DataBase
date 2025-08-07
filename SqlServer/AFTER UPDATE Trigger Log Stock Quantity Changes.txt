@@ -1,0 +1,15 @@
+--Create an `AFTER UPDATE` trigger `tr_LogStockChange` on the `Products` table that checks if `stock_quantity` has changed and, if so, inserts a row into `Stock_Log` with `product_id`, `change_type = 'UPDATE'`, `quantity_changed = new - old`, and `log_date = GETDATE()`.
+
+create trigger tr_LogStockChange on Products
+after update
+as
+begin
+--if update (stock_quantity)
+insert into Stock_Log(product_id,change_type ,quantity_changed,log_date)
+select i.product_id,
+'Update',
+i.stock_quantity - d.stock_quantity as quantity_changed,
+GetDate()
+from inserted i inner join deleted d on i.product_id= d.product_id
+
+end

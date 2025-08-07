@@ -1,0 +1,12 @@
+-- Create an `AFTER INSERT` trigger `tr_LogEnrollmentInsert` on the `Enrollments` table that logs each insertion into `Enrollment_Log` (which you must create), including `student_id`, `course`, `log_type = 'INSERT'`, and `log_date = GETDATE()`.
+
+create trigger tr_LogEnrollmentInsert  on Enrollments
+after insert
+as
+begin
+
+insert into Enrollment_Log(student_id,course,log_type,log_date)
+select student_id,course,'Insert',GetDate()
+from inserted
+end
+

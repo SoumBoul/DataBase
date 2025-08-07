@@ -1,0 +1,11 @@
+--Create an `AFTER INSERT` trigger `tr_LogNewEmployee` on `Employees` that logs each insertion into `AuditLog` with `action_type = 'INSERT'`, the `employee_id`, and the `new_salary` from the `INSERTED` table.
+
+CREATE TRIGGER tr_LogNewEmployee
+ON Employes
+AFTER INSERT
+AS
+BEGIN
+INSERT INTO Audit_Log(action_type, employee_id, new_salary)
+SELECT 'Insert', id, Salaire
+FROM inserted;
+END;

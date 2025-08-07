@@ -1,0 +1,22 @@
+--Use a CTE with `SUM()` and `GROUP BY` on the `Orders` table to calculate each customer's total spending, then assign a category (`Platinum`, `Gold`, `Silver`, `Bronze`) using a `CASE` expression.
+
+WITH CustomerTotals AS (
+SELECT
+c.customer_id,
+c.full_name,
+SUM(o.total_amount) AS total_spent
+FROM Customers c
+JOIN Orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.full_name
+)
+SELECT
+customer_id,
+full_name,
+total_spent,
+CASE
+WHEN total_spent > 5000 THEN 'Platinum'
+WHEN total_spent BETWEEN 3000 AND 5000 THEN 'Gold'
+WHEN total_spent BETWEEN 1000 AND 2999 THEN 'Silver'
+ELSE 'Bronze'
+END AS Category
+FROM CustomerTotals;
