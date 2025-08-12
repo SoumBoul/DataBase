@@ -1,0 +1,10 @@
+SELECT  
+Employees.Name,
+Employees.ManagerID,
+Employees.Salary,
+
+ISNULL(Managers.Name,Employees.Name) as ManagersName
+ 
+ from Employees left join Employees as Managers
+ on Employees.ManagerID = Managers.EmployeeID
+ 
